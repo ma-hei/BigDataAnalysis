@@ -1026,6 +1026,7 @@ $\tilde{\tau}=\begin{cases}c\times m & \text{if }t\neq \emptyset\\0 & \text{othe
 \end{frame}
 
 \begin{frame}
+\frametitle{Example: $c^-, c^+, a, b$}
 \begin{minipage}[t]{0.48\linewidth}
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
@@ -1082,6 +1083,7 @@ $\tilde{\tau}=\begin{cases}c\times m & \text{if }t\neq \emptyset\\0 & \text{othe
 \end{frame}
 
 \begin{frame}
+\frametitle{Sampling new $r_2$ edges from the badge}
 \begin{itemize}
 \item For each estimator draw random number $\varphi$ between 1 and $c^-+c^+$\\
 \vspace{1cm}
@@ -1101,8 +1103,85 @@ $\tilde{\tau}=\begin{cases}c\times m & \text{if }t\neq \emptyset\\0 & \text{othe
 \item if $\varphi\leq c^-$ don't sample new $r_2$ edge
 \item if $c^- \leq \varphi \leq c^-+a$ sample one of the edges that share endpoint $x$
 \item else sample one of the edges that share endpoint $y$
-
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sampling $r_2$ edges summary}
+\begin{itemize}
+\item paper presents simple algorithm to get $c^-, c^+, a, b$ which goes over the badge once
+%\begin{itemize}
+%\item keep hashtable that maps edges to estimators that hold it as $r_1$
+%\item keep track how many edges were incident to $x$ and $y$ at time when $r_1$ arrived
+%\item count how many edges are incident to $x$ and $y$ after all edges of badge arrived
+%\item difference between two above values give $a$ and $b$
+%\end{itemize}
+\item then we go over all estimators to sample the $r_2$ edges
+\item then go over badge again to find edge that corresponds to offset in range $c^-, c^-+a$ or $c^-+a,c^-+a+b$
+\end{itemize}
+\vspace{1cm}
+\begin{tikzpicture}
+\draw[] (0,0) rectangle (3,0.3) node[pos=0.5]{};
+\draw[] (3,0) rectangle (8,0.3) node[pos=0.5]{};
+\draw[] (8,0) rectangle (10,0.3) node[pos=0.5]{};
+\draw [decorate,decoration={brace,amplitude=10pt,mirror},yshift=-18pt ]
+(0,0) -- (3,0) node [black,midway,anchor=north,yshift=-9pt] {\footnotesize $c^-$};
+\draw [decorate,decoration={brace,amplitude=10pt,mirror},yshift=-2pt ]
+(3,0) -- (8,0) node [black,midway,anchor=north,yshift=-9pt] {\footnotesize $a$};
+\draw [decorate,decoration={brace,amplitude=10pt,mirror},yshift=-2pt ]
+(8,0) -- (10,0) node [black,midway,anchor=north,yshift=-9pt] {\footnotesize $b$};
+\draw [decorate,decoration={brace,amplitude=10pt,mirror},yshift=-18pt ]
+(3,0) -- (10,0) node [black,midway,anchor=north,yshift=-9pt] {\footnotesize $c^+$};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bulk Processing Step 3: Detect edges that close the wedges}
+\begin{itemize}
+\item For each estimator with $r_1$ and $r_2$ edges, check if badge contains an edge that comes after $r_2$ and closes $r_1, r_2$ to form a triangle
+\item Create hashtable that maps the needed edges to the estimators.
+\item Check if badge contains this edge and whether it comes after $r_2$	
+\end{itemize}
+
+\begin{minipage}[t]{0.31\linewidth}
+
+\begin{center}
+\mbox{\tiny {est.1: $r_1=e_{12}, r_2=e_4, t=\emptyset\dots$}}\\
+\vspace{0.5cm}
+\begin{tikzpicture}[scale=0.3]
+\tikzstyle{vertex}=[circle,fill=black,minimum size=5pt,inner sep=0pt]
+\node[vertex, label=left:{\tiny $x$}] (0) at (0,0){};
+\node[vertex, label=left:{\tiny $y$}] (1) at (0,3){};
+\node[vertex] (2) at (3,1.5){};
+\draw (2) -- (1)node[draw=none,fill=none,midway,above,font=\tiny] {$e_{12}$};
+\draw (2) -- (0)node[draw=none,fill=none,midway,below,font=\tiny,] {$e_4$};
+\draw[dashed] (0) -- (1)node[draw=none,fill=none,midway,left,font=\tiny,] {$e_{42}$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\begin{minipage}[t]{0.31\linewidth}
+\vspace{0.5cm}
+\begin{center}
+\begin{tabular}{l|l}
+\tiny{{x,y}} & \tiny{$est.1$}\\
+\tiny{{c,d}} & \tiny{$est.3$}\\
+\tiny{{u,v}} & \tiny{$est.12$}\\
+  \end{tabular}
+\end{center}
+\end{minipage}
+\begin{minipage}[t]{0.31\linewidth}
+\vspace{0.5cm}
+\begin{tikzpicture}[scale=0.8]
+\tikzstyle{recti}=[rectangle,draw=red,thick,minimum width=3.3cm,minimum height=0.4cm]
+\tikzstyle{stream}=[rectangle,]
+\node [stream] at (6,0) {\color{red}$e_{4}$};
+\node [stream] at (5.3,0) {{$e_3$}};
+\node [stream] at (4.6,0) {{$e_5$}};
+\node [stream] at (3.9,0) {$e_{17}$};
+\node [stream] at (3.2,0) {\color{red}$e_{42}$};
+\node [stream] at (2.5,0) {{$e_2$}};
+\end{tikzpicture}
+\end{minipage}
 \end{frame}
 
 \section{Sampling Triangles}
