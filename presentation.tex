@@ -1186,12 +1186,82 @@ $\tilde{\tau}=\begin{cases}c\times m & \text{if }t\neq \emptyset\\0 & \text{othe
 
 \section{Sampling Triangles}
 \begin{frame}
+\frametitle{Sample $k$ uniformly chosen triangles with replacement}
+\begin{itemize}
+\item so far we have an efficient algorithm to \textbf{count} triangles
+\item how do we \textbf{sample} triangles?
+\begin{itemize}
+\item let $t$ and $c$ be the values that are maintained in the estimators
+\item Define $\text{\texttt{unifTri(G)}}=\begin{cases}t& \text{with prob.}\frac{c}{2\Delta}\\\emptyset & \text{otherwise}\end{cases}$
+\item If \texttt{unifTri(G)} produces a triangle, each triangle in the graph is equally likely to be produced
+\item run $r$ copies of \texttt{unifTri(G)}, to sample $k$ uniformly chosen triangles from the graph
+\item success with probability at least $1-\delta$ as long as 
+\begin{center}
+$r\geq\frac{4mk\Delta ln(e/\delta)}{\tau(G)}$
+\end{center}
+\end{itemize}
+\end{itemize}
+\begin{center}
+
+\end{center}
 
 \end{frame}
 \section{Experiments and Results}
 \begin{frame}
+\frametitle{What we compare with}
+The space complexity of the presented method for triangle counting is 
+\begin{center}
+$O(s(\epsilon, \delta)m\Delta/\tau(G))$
+%\vspace{0.5cm}
+\begin{itemize}
+\item Jowhari and Ghodsi, 2005:
+\begin{itemize}
+\item space and per-edge time: $O(s(\epsilon,\delta)m\Delta^2/\tau(G))$
+\end{itemize}
+\item Pagh and Tsourakakis, 2012: 
+\begin{itemize}
+\item space: $O(1/\epsilon^2\cdot m\sigma/\tau(G)\cdot log(1/\delta))$
+\end{itemize}
+\item Kane, 2012:
+\begin{itemize}
+\item space: $O(s(\epsilon, \delta)\cdot m^3/\tau(G)^2)$
+\end{itemize}
+\end{itemize}
+\end{center}
+\end{frame}
+
+\begin{frame}
+
+\begin{itemize}
+\item \textit{Syn 3-reg} $n=2000$, $m=3000$, $\Delta=3$, $\tau=1000$
+\vspace{0.3cm}
+\begin{center}
+\includegraphics[scale=0.6]{compare1}
+\end{center}
+\item \textit{Hep-Th} $n=9877$, $m=51971$, $\Delta=130$, $\tau=90649$
+\vspace{0.3cm}
+\begin{center}
+\includegraphics[scale=0.6]{compare2}
+\end{center}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Evaluation on real graphs}
+\includegraphics[scale=0.4]{experiment1}
+\begin{center}
+\includegraphics[scale=0.4]{experiment2}
+\end{center}
 \end{frame}
 \section{Discussion}
 \begin{frame}
+\frametitle{What I didn't talk about}
+\begin{itemize}
+\item \textbf{Transitivity Coefficient}
+\begin{center}
+$\mathcal{K}(G)=\frac{3\tau(G)}{\zeta(G)}$, where $\zeta(G)$ is number of connected triplets
+\end{center}
+\item Extension to counting and sampling higher-order-cliques (\textit{4-Cliques},$\dots$)
+\end{itemize}
 \end{frame}
 \end{document}
