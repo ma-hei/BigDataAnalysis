@@ -28,7 +28,7 @@
 \begin{frame}
 \frametitle{Motivation}
 \begin{itemize}
-\item Triangle Counting is important in:
+\item Triangle is important structure in:
 \begin{itemize}
 \item social networks
 \item spam and fraud detection
@@ -266,10 +266,10 @@
 \begin{frame}
 \frametitle{Neighborhood Sampling}
 \begin{itemize}
+\item simple data structure: $(r_1,r_2,t,c)$
 \item first sample a random edge $r_1$ from the edge stream
 \item then sample a random edge $r_2$ from those edges that appear after $r_1$ and are adjacent to $r_1$
 \item try to close $r_1$ and $r_2$ with a subsequent edge, to form a triangle $t$
-\item simple data structure: $(r_1,r_2,t,c)$
 \item sample $r_1$ and $r_2$ using \textit{reservoir sampling}
 \end{itemize}
 
@@ -278,7 +278,7 @@
 \begin{frame}
 \frametitle{The Algorithm}
 \begin{algorithmic}
-\State \textbf{Upon receiving edge} $e$ \textbf{at time step} $m$
+\State \textbf{Upon receiving edge} $e$ \textbf{at step} $m$
 \If {\text{\texttt{coin(1/$m$)}}="head"}
     \State $(r_1,r_2,t,c)=(e,\emptyset,\emptyset,0)$
 \Else
@@ -1253,6 +1253,7 @@ $O(s(\epsilon, \delta)m\Delta/\tau(G))$
 \includegraphics[scale=0.4]{experiment2}
 \end{center}
 \end{frame}
+
 \section{Discussion}
 \begin{frame}
 \frametitle{What I didn't talk about}
@@ -1263,5 +1264,11 @@ $\mathcal{K}(G)=\frac{3\tau(G)}{\zeta(G)}$, where $\zeta(G)$ is number of connec
 \end{center}
 \item Extension to counting and sampling higher-order-cliques (\textit{4-Cliques},$\dots$)
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+Thank you!
+\end{center}
 \end{frame}
 \end{document}
